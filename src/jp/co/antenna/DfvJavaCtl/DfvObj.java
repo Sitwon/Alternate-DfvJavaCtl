@@ -237,6 +237,14 @@ public class DfvObj {
         else
             this.messageListener = null;
     }
+
+	public void setOmitBlankPages(boolean newVal) {
+		String opt = "-omitbp";
+		if (this.args.containsKey(opt))
+			this.args.remove(opt);
+		if (newVal)
+			this.args.put(opt, "");
+	}
     
     /**
      * Specifies the output file path of the formatted result.
