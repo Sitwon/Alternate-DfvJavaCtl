@@ -215,6 +215,11 @@ public class DfvObj {
             this.args.remove(opt);
         this.args.put(opt, String.valueOf(level));
     }
+
+	public void setFontAlias (String src, String dst) {
+		String opt = "-fontalias";
+		this.args.put(opt, src + "=" + dst);
+	}
     
     /**
      * Register the MessageListener interface to the instance of implemented class.
