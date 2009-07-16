@@ -220,6 +220,10 @@ public class DfvObj {
 		String opt = "-fontalias";
 		this.args.put(opt, src + "=" + dst);
 	}
+
+	public void setFormatPageListener (DfvFormatPageListener listener) {
+		// Do nothing
+	}
     
     /**
      * Register the MessageListener interface to the instance of implemented class.
