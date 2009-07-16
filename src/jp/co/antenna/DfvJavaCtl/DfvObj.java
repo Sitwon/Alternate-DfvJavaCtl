@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * XfoObj Class is the object class of XSL Formatter
+ * DfvObj Class is the object class of XSL Formatter
  * 
  * @author Test User
  */
@@ -18,7 +18,6 @@ public class DfvObj {
     public static final int EST_NONE = 0;
     public static final int EST_STDOUT = 1;
     public static final int EST_STDERR = 2;
-    
     public static final int S_PDF_EMBALLFONT_PART = 0;
     public static final int S_PDF_EMBALLFONT_ALL = 1;
     public static final int S_PDF_EMBALLFONT_BASE14 = 2;
@@ -29,46 +28,46 @@ public class DfvObj {
     private MessageListener messageListener;
     private String logPath;
     private LinkedHashMap<String, String> args;
-	private XfoException lastError;
+	private DfvException lastError;
     
     // Methods
     /**
-     * Create the instance of XfoObj, and initialize it.
+     * Create the instance of DfvObj, and initialize it.
      * 
-     * @throws XfoException
+     * @throws DfvException
      */
-    public XfoObj () throws XfoException {
-        // Check EVs and test if XslCmd.exe exists.
+    public DfvObj () throws DfvException {
+        // Check EVs and test if SbcCmd.exe exists.
 		String os;
 		try {
 			os = System.getProperty("os.name");
 			if ((os == null) || os.equals(""))
 				throw new Exception();
 		} catch (Exception e) {
-			throw new XfoException(4, 0, "Could not determine OS");
+			throw new DfvException(4, 0, "Could not determine OS");
 		}
-		String axf_home;
+		String sbc_home;
 		try {
-			axf_home = System.getenv("AXF43_HOME");
-			if ((axf_home == null) || axf_home.equals(""))
+			sbc_home = System.getenv("SBC_HOME");
+			if ((sbc_home == null) || sbc_home.equals(""))
 				throw new Exception();
 		} catch (Exception e) {
-			throw new XfoException(4, 1, "Could not find AXF43_HOME environment variable");
+			throw new DfvException(4, 1, "Could not find SBC_HOME environment variable");
 		}
 		String separator = System.getProperty("file.separator");
-        this.executable = axf_home + separator;
+        this.executable = sbc_home + separator;
 		if (os.equals("Linux") || os.equals("SunOS"))
-			this.executable += "bin" + separator + "XSLCmd";
+			this.executable += "bin" + separator + "SBCCmd";
 		else if (os.contains("Windows"))
-			this.executable += "XSLCmd.exe";
+			this.executable += "SBCCmd.exe";
 		else
-			throw new XfoException(4, 2, "Unsupported OS.");
+			throw new DfvException(4, 2, "Unsupported OS.");
         // setup attributes
         this.clear();
     }
     
     /**
-     * Cleanup (initialize) XSL Formatter engine.
+     * Cleanup (initialize) Server Based Converter engine.
      */
     public void clear () {
         // reset attributes        
@@ -80,11 +79,11 @@ public class DfvObj {
     }
     
     /**
-     * Execute formatting and outputs to a PDF. 
+     * Execute formatting. 
      * 
-     * @throws jp.co.antenna.XfoJavaCtl.XfoException
+     * @throws jp.co.antenna.DfvJavaCtl.DfvException
      */
-    public void execute () throws XfoException {
+    public void execute () throws DfvException {
 		ArrayList<String> cmdArray = new ArrayList<String>();
 		cmdArray.add(this.executable);
 		for (String arg : this.args.keySet()) {
@@ -112,29 +111,29 @@ public class DfvObj {
         } catch (Exception e) {}
         if (exitCode != 0) {
             if (errorParser != null || errorParser.LastErrorCode == 0) {
-                this.lastError = new XfoException(errorParser.LastErrorLevel, errorParser.LastErrorCode, errorParser.LastErrorMessage);
+                this.lastError = new DfvException(errorParser.LastErrorLevel, errorParser.LastErrorCode, errorParser.LastErrorMessage);
 				throw this.lastError;
             } else {
-                throw new XfoException(4, 0, "Failed to parse last error.");
+                throw new DfvException(4, 0, "Failed to parse last error.");
             }
         }
     }
 
-	public int getErrorCode () throws XfoException {
+	public int getErrorCode () throws DfvException {
 		if (this.lastError == null)
 			return 0;
 		else
 			return this.lastError.getErrorCode();
 	}
 
-	public int getErrorLevel () throws XfoException {
+	public int getErrorLevel () throws DfvException {
 		if (this.lastError == null)
 			return 0;
 		else
 			return this.lastError.getErrorLevel();
 	}
 
-	public String getErrorMessage () throws XfoException {
+	public String getErrorMessage () throws DfvException {
 		if (this.lastError == null)
 			return null;
 		else
@@ -145,7 +144,7 @@ public class DfvObj {
 		this.clear();
 	}
 
-    public void releaseObjectEx () throws XfoException {
+    public void releaseObjectEx () throws DfvException {
         releaseObject();
     }
     
@@ -155,16 +154,12 @@ public class DfvObj {
      * @param src   XSL-FO Document
      * @param dst   output stream
      * @param outDevice output device. Please refer to a setPrinterName method about the character string to specify. 
-     * @throws jp.co.antenna.XfoJavaCtl.XfoException
+     * @throws jp.co.antenna.DfvJavaCtl.DfvException
      */
-    public void render (InputStream src, OutputStream dst, String outDevice) throws XfoException {
+    public void render (InputStream src, OutputStream dst, String outDevice) throws DfvException {
         if (this.messageListener != null)
             this.messageListener.onMessage(4, 0, "render() is not implemented yet.");
-        throw new XfoException(4, 0, "render() is not implemented yet.");
-    }
-    
-    public void setBatchPrint (boolean bat) {
-        // Fake it. 
+        throw new DfvException(4, 0, "render() is not implemented yet.");
     }
     
     /**
@@ -172,9 +167,9 @@ public class DfvObj {
      * <br>If specified "@STDIN", XML document reads from stdin. The document that is read from stdin is assumed to be FO. 
      * 
      * @param uri URI of XML document
-     * @throws jp.co.antenna.XfoJavaCtl.XfoException
+     * @throws jp.co.antenna.DfvJavaCtl.DfvException
      */
-    public void setDocumentURI (String uri) throws XfoException {
+    public void setDocumentURI (String uri) throws DfvException {
         // Set the URI...
         String opt = "-d";
         if (uri != null && !uri.equals("")) {
@@ -186,7 +181,7 @@ public class DfvObj {
             this.args.remove(opt);
         }
     }
-    
+
     public void setErrorLogPath (String path) {
         if (path != null && !path.equals("")) {
             this.logPath = " 2>> " + path;
@@ -195,46 +190,23 @@ public class DfvObj {
         }
     }
     
-    public void setErrorStreamType (int type) {
-        // Fake it.
-    }
-    
     /**
      * Set the error level to abort formatting process.
-     * <br>XSL Formatter will stop formatting when the detected error level is equal to setExitLevel setting or higher.
+     * <br>Server Based Converter will stop formatting when the detected error level is equal to setExitLevel setting or higher.
      * <br>The default value is 2 (Warning). Thus if an error occurred and error level is 2 (Warning) or higher, the 
      * formatting process will be aborted. Please use the value from 1 to 4. When the value of 5 or more is specified, 
      * it is considered to be the value of 4. If a error-level:4 (fatal error) occurs, the formatting process will be 
      * aborted unconditionally. Note: An error is not displayed regardless what value may be specified to be this property. 
      * 
      * @param level Error level to abort
-     * @throws jp.co.antenna.XfoJavaCtl.XfoException
+     * @throws jp.co.antenna.DfvJavaCtl.DfvException
      */
-    public void setExitLevel (int level) throws XfoException {
+    public void setExitLevel (int level) throws DfvException {
         // Set the level...
         String opt = "-extlevel";
         if (this.args.containsKey(opt))
             this.args.remove(opt);
         this.args.put(opt, String.valueOf(level));
-    }
-    
-    /**
-     * Set the command-line string for external XSLT processor. For example:
-     * <DL><DD>xslt -o %3 %1 %2 %param</DL>
-     * %1 to %3 means following:
-     * <DL><DD>%1 : XML Document 
-     * <DD>%2 : XSL Stylesheet 
-     * <DD>%3 : XSLT Output File 
-     * <DD>%param : xsl:param</DL>
-     * %1 to %3 are used to express only parameter positions. Do not replace them with actual file names.
-     * <br>In case you use XSL:param for external XSLT processor, set the name and value here.
-     * <br>In Windows version, default MSXML3 will be used. 
-     * 
-     * @param cmd Command-line string for external XSLT processor
-     * @throws jp.co.antenna.XfoJavaCtl.XfoException
-     */
-    public void setExternalXSLT (String cmd) throws XfoException {
-        // Fill this in....
     }
     
     /**
@@ -250,15 +222,6 @@ public class DfvObj {
             this.messageListener = null;
     }
     
-    public void setMultiVolume (boolean multiVol) {
-        String opt = "-multivol";
-        if (multiVol) {
-            this.args.put(opt, "");
-        } else {
-            this.args.remove(opt);
-        }
-    }
-    
     /**
      * Specifies the output file path of the formatted result.
      * <br>When the printer is specified as an output format by setPrinterName, a
@@ -268,9 +231,9 @@ public class DfvObj {
      * <br>When omitted, or when "@STDOUT" is specified, it comes to standard output. 
      * 
      * @param path Path name of output file
-     * @throws jp.co.antenna.XfoJavaCtl.XfoException
+     * @throws jp.co.antenna.DfvJavaCtl.DfvException
      */
-    public void setOutputFilePath (String path) throws XfoException {
+    public void setOutputFilePath (String path) throws DfvException {
         // Set the path...
         String opt = "-o";
         if (path != null && !path.equals("")) {
@@ -283,14 +246,19 @@ public class DfvObj {
         }
     }
     
-    public void setPdfEmbedAllFontsEx (int embedLevel) throws XfoException {
+	public void setPdfEmbedAllFonts (boolean embedBool) {
+		String opt = "-peb";
+		if (embedBool) {
+			this.args.put(opt, String.valueOf(S_PDF_EMBALLFONT_ALL));
+		} else {
+			this.args.remove(opt);
+		}
+	}
+
+    public void setPdfEmbedAllFontsEx (int embedLevel) throws DfvException {
         // fill it in
         String opt = "-peb";
-        if (embedLevel != -1) {
-            this.args.put(opt, String.valueOf(embedLevel));
-        } else {
-            this.args.remove(opt);
-        }
+		this.args.put(opt, String.valueOf(embedLevel));
     }
     
     public void setPdfImageCompression (int compressionMethod) {
@@ -309,33 +277,6 @@ public class DfvObj {
         }
     }
     
-    public void setStylesheetURI (String uri) {
-        String opt = "-s";
-        if (uri != null && !uri.equals("")) {
-            if (this.args.containsKey(opt))
-                this.args.remove(opt);
-            this.args.put(opt, uri);
-        }
-        else {
-            this.args.remove(opt);
-        }
-    }
-    
-    public void setOptionFileURI (String path) {
-        String opt = "-i";
-        if (path != null && !path.equals("")) {
-            if (this.args.containsKey(opt))
-                this.args.remove(opt);
-            this.args.put(opt, path);
-        }
-        else {
-            this.args.remove(opt);
-        }
-    }
-    
-    public void setXSLTParam (String paramName, String value) {
-        // fill it in
-    }
 }
 
 class ErrorParser extends Thread {
@@ -357,7 +298,7 @@ class ErrorParser extends Thread {
             BufferedReader reader = new BufferedReader(new InputStreamReader(this.ErrorStream));
             String line = reader.readLine();
             while (line != null) {
-                if (line.startsWith("XSLCmd :")) {
+                if (line.startsWith("SBCCmd :")) {
                     if (line.contains("Error Level")) {
                         try {
                             int ErrorLevel = Integer.parseInt(line.substring(line.length() - 1, line.length()));
@@ -366,7 +307,7 @@ class ErrorParser extends Thread {
                             line = reader.readLine();
                             String ErrorMessage = line.split(" ", 3)[2];
                             line = reader.readLine();
-                            if (line.startsWith("XSLCmd :")) {
+                            if (line.startsWith("SBCCmd :")) {
                                 ErrorMessage += "\n" + line.split(" ", 3)[2];
                             }
                             this.LastErrorLevel = ErrorLevel;
