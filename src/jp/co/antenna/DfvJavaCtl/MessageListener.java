@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package jp.co.antenna.XfoJavaCtl;
+package jp.co.antenna.DfvJavaCtl;
 
 /**
  *

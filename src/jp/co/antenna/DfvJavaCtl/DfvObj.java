@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package jp.co.antenna.XfoJavaCtl;
+package jp.co.antenna.DfvJavaCtl;
 
 import java.io.*;
 import java.util.*;
@@ -13,7 +13,7 @@ import java.util.*;
  * 
  * @author Test User
  */
-public class XfoObj {
+public class DfvObj {
     // Consts
     public static final int EST_NONE = 0;
     public static final int EST_STDOUT = 1;

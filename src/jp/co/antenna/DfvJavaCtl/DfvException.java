@@ -3,18 +3,18 @@
  * and open the template in the editor.
  */
 
-package jp.co.antenna.XfoJavaCtl;
+package jp.co.antenna.DfvJavaCtl;
 
 /**
  *
  * @author Test User
  */
-public class XfoException extends Exception implements java.io.Serializable {
+public class DfvException extends Exception implements java.io.Serializable {
     private int errLevel;
     private int errCode;
     private String errMsg;
     
-    public XfoException (int errLevel, int errCode, String errMsg) {
+    public DfvException (int errLevel, int errCode, String errMsg) {
         this.errLevel = errLevel;
         this.errCode = errCode;
         this.errMsg = errMsg;

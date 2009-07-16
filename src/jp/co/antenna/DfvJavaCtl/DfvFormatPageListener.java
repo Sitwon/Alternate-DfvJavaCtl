@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package jp.co.antenna.XfoJavaCtl;
+package jp.co.antenna.DfvJavaCtl;
 
 /**
  *
  * @author Test User
  */
-public interface XfoFormatPageListener {
+public interface DfvFormatPageListener {
     public void onFormatPage (int pageNo);
 }
