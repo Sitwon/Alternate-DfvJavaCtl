@@ -255,16 +255,18 @@ public class DfvObj {
     
 	public void setPdfEmbedAllFonts (boolean embedBool) {
 		String opt = "-peb";
+		if (this.args.containsKey(opt))
+			this.args.remove(opt);
 		if (embedBool) {
 			this.args.put(opt, String.valueOf(S_PDF_EMBALLFONT_ALL));
-		} else {
-			this.args.remove(opt);
 		}
 	}
 
     public void setPdfEmbedAllFontsEx (int embedLevel) throws DfvException {
         // fill it in
         String opt = "-peb";
+		if (this.args.containsKey(opt))
+			this.args.remove(opt);
 		this.args.put(opt, String.valueOf(embedLevel));
     }
     
