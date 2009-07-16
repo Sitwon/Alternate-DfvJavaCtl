@@ -182,6 +182,13 @@ public class DfvObj {
         }
     }
 
+	public void setEndPage(int num) {
+		String opt = "-end";
+		if (this.args.containsKey(opt))
+			this.args.remove(opt);
+		this.args.put(opt, String.valueOf(num));
+	}
+
     public void setErrorLogPath (String path) {
         if (path != null && !path.equals("")) {
             this.logPath = " 2>> " + path;
