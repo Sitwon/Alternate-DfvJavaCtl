@@ -86,7 +86,9 @@ public class DfvObj {
     public void execute () throws DfvException {
 		ArrayList<String> cmdArray = new ArrayList<String>();
 		cmdArray.add(this.executable);
-		for (String arg : this.args.keySet()) {
+		String argList[] = this.args.keySet().toArray(new String[0]);
+		String arg;
+		for (int i = 0; i < argList.length; i++) {
 			cmdArray.add(arg);
 			cmdArray.add(this.args.get(arg));
 		}
