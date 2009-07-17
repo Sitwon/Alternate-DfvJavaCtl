@@ -84,7 +84,7 @@ public class DfvObj {
      * @throws jp.co.antenna.DfvJavaCtl.DfvException
      */
     public void execute () throws DfvException {
-		ArrayList cmdArray = new ArrayList<String>();
+		ArrayList cmdArray = new ArrayList();
 		cmdArray.add(this.executable);
 		Object argList[] = this.args.keySet().toArray();
 		String arg;
