@@ -27,7 +27,7 @@ public class DfvObj {
     private Runtime r;
     private MessageListener messageListener;
     private String logPath;
-    private LinkedHashMap<String, String> args;
+    private LinkedHashMap args;
 	private DfvException lastError;
     
     // Methods
@@ -73,7 +73,7 @@ public class DfvObj {
         // reset attributes        
         this.r = Runtime.getRuntime();
         this.logPath = null;
-        this.args = new LinkedHashMap<String, String>();
+        this.args = new LinkedHashMap();
         this.messageListener = null;
 		this.lastError = null;
     }
@@ -84,7 +84,7 @@ public class DfvObj {
      * @throws jp.co.antenna.DfvJavaCtl.DfvException
      */
     public void execute () throws DfvException {
-		ArrayList<String> cmdArray = new ArrayList<String>();
+		ArrayList cmdArray = new ArrayList<String>();
 		cmdArray.add(this.executable);
 		String argList[] = this.args.keySet().toArray(new String[0]);
 		String arg;
