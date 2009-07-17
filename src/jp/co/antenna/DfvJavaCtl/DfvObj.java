@@ -317,7 +317,6 @@ class ErrorParser extends Thread {
         this.listener = listener;
     }
     
-    @Override
     public void run () {
         try {
             // stuff
