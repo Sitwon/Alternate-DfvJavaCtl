@@ -48,7 +48,7 @@ public class DfvObj {
 		}
 		String sbc_home;
 		try {
-			sbc_home = System.getenv("SBC_HOME");
+			sbc_home = System.getProperty("SBC_HOME");
 			if ((sbc_home == null) || sbc_home.equals(""))
 				throw new Exception();
 		} catch (Exception e) {
