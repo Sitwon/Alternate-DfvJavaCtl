@@ -58,7 +58,7 @@ public class DfvObj {
         this.executable = sbc_home + separator;
 		if (os.equals("Linux") || os.equals("SunOS"))
 			this.executable += "bin" + separator + "SBCCmd";
-		else if (os.contains("Windows"))
+		else if (os.indexOf("Windows") != -1)
 			this.executable += "SBCCmd.exe";
 		else
 			throw new DfvException(4, 2, "Unsupported OS.");
@@ -331,7 +331,7 @@ class ErrorParser extends Thread {
             String line = reader.readLine();
             while (line != null) {
                 if (line.startsWith("SBCCmd :")) {
-                    if (line.contains("Error Level")) {
+                    if (line.indexOf("Error Level") != -1) {
                         try {
                             int ErrorLevel = Integer.parseInt(line.substring(line.length() - 1, line.length()));
                             line = reader.readLine();
