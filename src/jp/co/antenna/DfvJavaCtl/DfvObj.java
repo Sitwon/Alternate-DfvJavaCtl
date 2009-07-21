@@ -117,7 +117,7 @@ public class DfvObj {
             exitCode = process.waitFor();
         } catch (Exception e) {}
         if (exitCode != 0) {
-            if (errorParser != null || errorParser.LastErrorCode == 0) {
+            if (errorParser != null && errorParser.LastErrorCode != 0) {
                 this.lastError = new DfvException(errorParser.LastErrorLevel, errorParser.LastErrorCode, errorParser.LastErrorMessage);
 				throw this.lastError;
             } else {
