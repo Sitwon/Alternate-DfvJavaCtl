@@ -88,7 +88,8 @@ public class DfvObj {
 		cmdArray.add(this.executable);
 		for (String arg : this.args.keySet()) {
 			cmdArray.add(arg);
-			cmdArray.add(this.args.get(arg));
+			if (!this.args.get(arg).equals(""))
+				cmdArray.add(this.args.get(arg));
 		}
         // Run Formatter with Runtime.exec()
         Process process;
@@ -303,6 +304,33 @@ public class DfvObj {
         }
     }
     
+	public void setSvgFormat (String newVal) {
+		String opt = "-svgfmt";
+		if (newVal != null && !newVal.equals("")) {
+			if (this.args.containsKey(opt))
+				this.args.remove(opt);
+			this.args.put(opt, newVal);
+		}
+		else {
+			this.args.remove(opt);
+		}
+	}
+
+	public void setSvgSingleFile (boolean newVal) {
+		String opt = "-svgsingle";
+		if (this.args.containsKey(opt))
+			this.args.remove(opt);
+		if (newVal)
+			this.args.put(opt, "");
+	}
+
+	public void setSvgSinglePageNumber (boolean newVal) {
+		String opt = "-svgspn";
+		if (this.args.containsKey(opt))
+			this.args.remove(opt);
+		if (newVal)
+			this.args.put(opt, "");
+	}
 }
 
 class ErrorParser extends Thread {
